@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>API Tester</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: white;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #3b82f6;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+
+    .response {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #020617;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>API Tester 🚀</h2>
+
+    <input id="apikey" placeholder="Enter API Key (e.g. 123abc)" />
+    <button onclick="sendRequest()">Send Request</button>
+
+    <div id="response" class="response"></div>
+  </div>
+
+  <script>
+    async function sendRequest() {
+      const apiKey = document.getElementById("apikey").value;
+      const resBox = document.getElementById("response");
+
+      resBox.innerText = "Loading...";
+
+      try {
+        const res = await fetch(`http://localhost:4000/api`, {
+          method: "GET",
+          headers: {
+            "x-api-key": apiKey
+          }
+        });
+
+        const data = await res.json();
+
+        resBox.innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resBox.innerText = "Error: " + err.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
